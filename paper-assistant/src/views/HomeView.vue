@@ -5,14 +5,27 @@ const { getOoxml } = useCStore();
 const { sendMsg } = useChatStore();
 import ChatMsg from "@/components/ChatMsg.vue"
 import { ref } from "vue";
+import { sendOoxml } from "@/api/document"
+import { onMounted } from "vue";
 
+//onLaunch();
 
-
-onLaunch();
+// 使用onMounted钩子来替代onLaunch
+onMounted(async () => {
+  let documentooxml = await getCurrentDocx();
+  sendOoxml({"content": documentooxml}).then(response => {
+    console.log(response.data);
+  });
+});
 
 /** 页面入口函数 */
-function onLaunch() {
-  getCurrentDocx();
+async function onLaunch() {
+  
+  let documentooxml = await getCurrentDocx();
+
+  sendOoxml({"content": documentooxml}).then(response => {
+    console.log(response.data);
+  })
 
 }
 
